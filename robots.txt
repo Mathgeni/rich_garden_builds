@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://richgarden.kz
+Sitemap: https://richgarden.kz/sitemap.xml

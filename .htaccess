@@ -1,1 +1,93 @@
 ErrorDocument 404 /404.html
+ErrorDocument 410 /404.html
+
+# ---- Old Joomla site → new URLs ---------------------------------------------
+# Until Sept 2026 this domain ran a Joomla shop whose ~400 URLs are still in
+# search indexes. Each old page 301s to its closest new page so rankings carry
+# over; Joomla system URLs (abused by spammers) answer 410 Gone so they drop out
+# of the index. Order matters: specific cultivars first, then genus/category
+# fallbacks. Patterns match Latin fragments because the Cyrillic parts of old
+# slugs were inconsistent. Rules never touch /catalogue/, /polezno/<slug>/,
+# /.well-known/ or other new paths.
+RewriteEngine On
+
+# Joomla internals → 410
+RewriteCond %{QUERY_STRING} (^|&)option=com_ [NC]
+RewriteRule ^(index\.php)?$ - [G]
+RewriteRule ^(index\.php/)?(component|administrator|registratsiya|vkhod)(/|$) - [G,NC]
+RewriteRule ^polezno/itemlist/user(/|$) - [G,NC]
+
+# Old mobile prefixes: strip, then the rules below apply on the next request
+RewriteRule ^(m|mobile)/(.+)$ https://richgarden.kz/$2 [R=301,L,QSD,NC]
+
+# Туя
+RewriteRule ^katalog/.*golden-smaragd https://richgarden.kz/catalogue/tuya/golden-smaragd/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*smaragd https://richgarden.kz/catalogue/tuya/smaragd/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*brabant https://richgarden.kz/catalogue/tuya/brabant/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*golden-glob https://richgarden.kz/catalogue/tuya/golden-globe/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*thuja[^/]*columna https://richgarden.kz/catalogue/tuya/columna/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*woodwardii https://richgarden.kz/catalogue/tuya/woodwardii/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*thuja[^/]*globosa-compacta https://richgarden.kz/catalogue/tuya/globosa-compacta/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*thuja[^/]*globosa https://richgarden.kz/catalogue/tuya/globosa/ [R=301,L,QSD,NC]
+
+# Ель
+RewriteRule ^katalog/.*glauca-globosa https://richgarden.kz/catalogue/yel/glauca-globosa/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*iseli https://richgarden.kz/catalogue/yel/iseli-fastigiata/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*blue-diamond https://richgarden.kz/catalogue/yel/blue-diamond/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*hoopsii https://richgarden.kz/catalogue/yel/hoopsii/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*bia.{1,2}obok https://richgarden.kz/catalogue/yel/bialobok/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*super-blue https://richgarden.kz/catalogue/yel/super-blue/ [R=301,L,QSD,NC]
+
+# Можжевельник
+RewriteRule ^katalog/.*moonglow https://richgarden.kz/catalogue/mozhevelnik/moonglow/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*mint-julep https://richgarden.kz/catalogue/mozhevelnik/mint-julep/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*old-gold https://richgarden.kz/catalogue/mozhevelnik/old-gold/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*andorra-compact https://richgarden.kz/catalogue/mozhevelnik/andorra-compact/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*andorra https://richgarden.kz/catalogue/mozhevelnik/andorra/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*blue-chip https://richgarden.kz/catalogue/mozhevelnik/blue-chip/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*blue-arrow https://richgarden.kz/catalogue/mozhevelnik/blue-arrow/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*blue-carpet https://richgarden.kz/catalogue/mozhevelnik/blue-carpet/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*sky-?rocket https://richgarden.kz/catalogue/mozhevelnik/skyrocket/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*horizontalis-glauca https://richgarden.kz/catalogue/mozhevelnik/glauca/ [R=301,L,QSD,NC]
+
+# Сосна
+RewriteRule ^katalog/.*green-tower https://richgarden.kz/catalogue/sosna/green-tower/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*winter-?gold https://richgarden.kz/catalogue/sosna/winter-gold/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*mughus https://richgarden.kz/catalogue/sosna/gornaya-mugo/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*pinus-mugo https://richgarden.kz/catalogue/sosna/gornaya/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*strobus https://richgarden.kz/catalogue/sosna/veymutova/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*watereri https://richgarden.kz/catalogue/sosna/watereri/ [R=301,L,QSD,NC]
+
+# Пихта
+RewriteRule ^katalog/.*abies-koreana https://richgarden.kz/catalogue/pihta/koreyskaya/ [R=301,L,QSD,NC]
+
+# Лиственные
+RewriteRule ^katalog/.*bristol-ruby https://richgarden.kz/catalogue/listvennye/veygela-bristol-ruby/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*alexandra https://richgarden.kz/catalogue/listvennye/veygela-aleksandra/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*(hydrangea|gortenzi) https://richgarden.kz/catalogue/listvennye/gortenziya-metelchataya/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(listvennye-derevya/deren(/|$)|.*cornus) https://richgarden.kz/catalogue/listvennye/deren/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*(aesculus|kashtan) https://richgarden.kz/catalogue/listvennye/kashtan/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(listvennye-derevya/kolkvicia(/|$)|.*kolkwitzia) https://richgarden.kz/catalogue/listvennye/kolkvitsiya/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(listvennye-derevya/puzyreplodnik(/|$)|.*physocarpus) https://richgarden.kz/catalogue/listvennye/puzyreplodnik/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(listvennye-derevya/siren(/|$)|.*syringa) https://richgarden.kz/catalogue/listvennye/siren/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(listvennye-derevya/forzicia(/|$)|.*forsythia) https://richgarden.kz/catalogue/listvennye/forzitsiya/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/.*(philadelphus|chubushnik) https://richgarden.kz/catalogue/listvennye/chubushnik/ [R=301,L,QSD,NC]
+
+# Genus / category fallbacks (picea before abies: "picea-abies" is a spruce)
+RewriteRule ^katalog/(khvojnye-rasteniya/tuya(/|$)|.*thuja) https://richgarden.kz/catalogue/tuya/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(khvojnye-rasteniya/yel(/|$)|.*picea) https://richgarden.kz/catalogue/yel/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(khvojnye-rasteniya/mozhevelnik(/|$)|.*juniperus) https://richgarden.kz/catalogue/mozhevelnik/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(khvojnye-rasteniya/sosna(/|$)|.*pinus) https://richgarden.kz/catalogue/sosna/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/(khvojnye-rasteniya/pihta(/|$)|.*abies) https://richgarden.kz/catalogue/pihta/ [R=301,L,QSD,NC]
+RewriteRule ^katalog/listvennye-derevya https://richgarden.kz/catalogue/listvennye/ [R=301,L,QSD,NC]
+RewriteRule ^katalog(/|$) https://richgarden.kz/catalogue/ [R=301,L,QSD,NC]
+
+# Articles
+RewriteRule ^polezno/item/6- https://richgarden.kz/polezno/zhivaya-izgorod-iz-tui/ [R=301,L,QSD,NC]
+RewriteRule ^polezno/item/(5|7)- https://richgarden.kz/polezno/ukhod-za-khvojnymi-posle-posadki/ [R=301,L,QSD,NC]
+RewriteRule ^polezno(/item(list)?/.*)?$ https://richgarden.kz/polezno/ [R=301,L,QSD,NC]
+
+# Old top-level pages
+RewriteRule ^nashi-uslugi/?$ https://richgarden.kz/#services [R=301,L,QSD,NE,NC]
+RewriteRule ^kontakty/?$ https://richgarden.kz/#contacts [R=301,L,QSD,NE,NC]
+RewriteRule ^(o-kompanii|optovikam|index\.php)/?$ https://richgarden.kz/ [R=301,L,QSD,NC]
